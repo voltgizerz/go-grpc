@@ -13,7 +13,10 @@
 ## Usage
 
 ```sh
-py ./main.py
+1. Set .env
+2. Run all gRPC server
+3. Run API Gateway
+4. Test using postman.
 ```
 
 ## Author
