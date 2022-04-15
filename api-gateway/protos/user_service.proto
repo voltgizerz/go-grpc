@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "/pb";
+
+import "protos/get_user.proto";
+
+// The user service definition.
+service UserService {
+  // GetUser gets a user by ID.
+  rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
+}

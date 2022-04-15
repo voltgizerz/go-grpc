@@ -8,13 +8,13 @@ import (
 	"github.com/api-gateway/pb"
 )
 
-// GetOrder - returns an order.
-func (s *Service) GetOrder(ordID string) (*pb.GetOrderResponse, error) {
+// GetUser - returns a user.
+func (s *Service) GetUser(uID string) (*pb.GetUserResponse, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	orderID := int64(rand.Intn(100000000))
-	res, err := s.OrderSC.GetOrder(ctx, &pb.GetOrderRequest{OrderId: orderID})
+	userID := int64(rand.Intn(1000))
+	res, err := s.UserSC.GetUser(ctx, &pb.GetUserRequest{UserId: userID})
 	if err != nil {
 		return nil, err
 	}

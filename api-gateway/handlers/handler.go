@@ -10,10 +10,11 @@ type Handler struct {
 	Service services.Service
 }
 
-func NewHandler(conn *grpc.ClientConn) *Handler {
+func NewHandler(orderConn *grpc.ClientConn, userConn *grpc.ClientConn) *Handler {
 	return &Handler{
 		Service: services.Service{
-			OrderSC: pb.NewOrderServiceClient(conn),
+			OrderSC: pb.NewOrderServiceClient(orderConn),
+			UserSC:  pb.NewUserServiceClient(userConn),
 		},
 	}
 }

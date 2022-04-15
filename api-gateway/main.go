@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/api-gateway/handlers"
 	"github.com/joho/godotenv"
@@ -14,7 +16,7 @@ import (
 var defaultPort = ":1000"
 
 // Init - .
-func Init() {
+func LoadENV() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}
@@ -24,15 +26,32 @@ func Init() {
 }
 
 func main() {
-	Init()
-	// Set up a connection to the server.
-	conn, err := grpc.Dial(os.Getenv("ORDER_GRPC"), grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect to order grpc: %v", err)
-	}
-	defer conn.Close()
+	LoadENV()
+	log.Println("Dialing gRPC server...")
 
-	h := handlers.NewHandler(conn)
+	// Set up a connection to the server.
+	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
+	defer cancel()
+
+	connOrder, err := grpc.DialContext(ctx, os.Getenv("ORDER_GRPC"),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithBlock(),
+	)
+	if err != nil {
+		log.Fatalf("did not connect to order gRPC: %v", err)
+	}
+	defer connOrder.Close()
+
+	connUser, err := grpc.DialContext(ctx, os.Getenv("USER_GRPC"),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithBlock(),
+	)
+	if err != nil {
+		log.Fatalf("did not connect to user gRPC: %v", err)
+	}
+	defer connUser.Close()
+
+	h := handlers.NewHandler(connOrder, connUser)
 	appRouter := h.NewRouter()
 
 	log.Printf("API Gateway listening at http://localhost%s", defaultPort)
