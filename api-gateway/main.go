@@ -6,8 +6,6 @@ import (
 	"os"
 
 	"github.com/api-gateway/handlers"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -20,7 +18,6 @@ func Init() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}
-
 	if os.Getenv("PORT") != "" {
 		defaultPort = ":" + os.Getenv("PORT")
 	}
@@ -35,19 +32,9 @@ func main() {
 	}
 	defer conn.Close()
 
-	h := handlers.NewServiceClient(conn)
+	h := handlers.NewHandler(conn)
+	appRouter := h.NewRouter()
 
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("API Gateway Microservices Felix"))
-	})
-
-	r.Route("/api/orders", func(r chi.Router) {
-		r.Get("/", h.GetOrders())
-	})
-
-	log.Printf("Api Gateway listening at http://localhost%s", defaultPort)
-	http.ListenAndServe(defaultPort, r)
-
+	log.Printf("API Gateway listening at http://localhost%s", defaultPort)
+	http.ListenAndServe(defaultPort, appRouter)
 }

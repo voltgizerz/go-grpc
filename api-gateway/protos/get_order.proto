@@ -8,17 +8,27 @@ message GetOrderRequest {
   int64 order_id = 1;
 }
 
-// The response message containing the order .
+// The response message containing the order.
 message GetOrderResponse {
   bool sucesss = 1;
   int64 order_id = 2;
   int64 customer_id = 3;
-  repeated Item items = 4;
+  string first_name = 4;
+  string last_name = 5;
+  string order_status = 6;
+  int64 discount = 7;
+  int64 discount_type = 8;
+  int64 subtotal = 9;
+  int64 total = 10;
+  int64 balance = 11;
+  repeated OrderItem items = 12;
 }
 
-message Item {
+message OrderItem {
   int32 id = 1;
   string name = 2;
-  int32 price = 3;
-  int32 quantity = 4;
+  int32 quantity = 3;
+  int32 price = 4;
+  int32 discount = 5;
+  int32 total = 6;
 }

@@ -2,14 +2,12 @@ package handlers
 
 import (
 	"net/http"
-
-	"github.com/api-gateway/services"
 )
 
-func (h *ServiceClient) GetOrders() http.HandlerFunc {
+func (h *Handler) GetOrder() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		service := services.Service{OrderSC: h.OrderSC}
-		res, err := service.GetOrders()
+		orderID := r.URL.Query().Get("order_id")
+		res, err := h.Service.GetOrder(orderID)
 		if err != nil {
 			ErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
