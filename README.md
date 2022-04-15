@@ -1,25 +1,30 @@
-## Example Simple Go Microservices gRPC
+# Simple Go Microservices gRPC
+Simple Microservices using Go with faker data.
+- API Gateway
 - Auth Service
 - Order Service
 - User Service
-- API Gateway
 
-## Install
+# BUILD WITH
+- Chi
+- Faker
+
+# Install
 
 ```sh
-1. Go version 1.17.8 or higher
+1. Minimum Go version 1.17.8 or higher installed.
 ```
 
-## Usage
+# How to run project?
 
 ```sh
 1. Set .env
 2. Run all gRPC server
 3. Run API Gateway
-4. Test using postman
+4. Test request using postman
 ```
 
-## Author
+# Author
 
 👤 **Felix Fernando**
 
