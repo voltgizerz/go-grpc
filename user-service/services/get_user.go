@@ -10,7 +10,7 @@ import (
 
 var status = []string{"Pending", "Processing", "Shipped", "Delivered"}
 
-// GetOrder - get single fake data order.
+// GetUser - get single fake data order.
 func (s *Server) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	log.Printf("Received: %v", in)
 	var res pb.GetUserResponse

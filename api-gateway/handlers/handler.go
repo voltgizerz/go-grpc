@@ -6,10 +6,12 @@ import (
 	"google.golang.org/grpc"
 )
 
+// Handler - .
 type Handler struct {
 	Service services.Service
 }
 
+// NewHandler - return new Handler.
 func NewHandler(orderConn *grpc.ClientConn, userConn *grpc.ClientConn) *Handler {
 	return &Handler{
 		Service: services.Service{

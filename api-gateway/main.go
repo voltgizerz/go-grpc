@@ -15,7 +15,7 @@ import (
 
 var defaultPort = ":1000"
 
-// Init - .
+// LoadENV - load env file.
 func LoadENV() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
