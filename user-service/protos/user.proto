@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "/pb";
+
+message User {
+  string name = 1;
+  int32 age = 2;
+  string email = 3;
+  string phone = 4;
+  string address = 5;
+  string city = 6;
+  string state = 7;
+  string zip = 8;
+  string country = 9;
+}
