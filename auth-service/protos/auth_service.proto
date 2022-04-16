@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "/pb";
+
+import "protos/login.proto";
+import "protos/register.proto";
+import "protos/validate.proto";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+}
+
