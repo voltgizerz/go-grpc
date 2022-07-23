@@ -8,7 +8,7 @@ on:
     paths:
       - 'user/**.go'
       - 'revive.toml'
-      - '.github/workflows/revive-lint.yml'
+      - '.github/workflows/revive-lint-user.yml'
 
 jobs:
 

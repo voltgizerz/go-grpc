@@ -8,7 +8,7 @@ on:
     paths:
       - 'order/**.go'
       - 'revive.toml'
-      - '.github/workflows/revive-lint.yml'
+      - '.github/workflows/revive-lint-order.yml'
 
 jobs:
 

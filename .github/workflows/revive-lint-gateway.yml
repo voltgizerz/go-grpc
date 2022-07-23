@@ -8,7 +8,7 @@ on:
     paths:
       - 'api-gateway/**.go'
       - 'revive.toml'
-      - '.github/workflows/revive-lint.yml'
+      - '.github/workflows/revive-lint-gateway.yml'
 
 jobs:
 
