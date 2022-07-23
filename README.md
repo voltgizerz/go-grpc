@@ -25,7 +25,7 @@ Simple Microservices using Go with faker data.
 ```
 
 # Where to edit protos ?
--[Here](https://github.com/voltgizerz/public-protos)
+[Click Here](https://github.com/voltgizerz/public-protos) (public-protos)
 
 # Author
 
