@@ -13,13 +13,13 @@ type Handler struct {
 }
 
 // NewHandler - init handler.
-func NewHandler(service *config.GrpcClient, logrus *logrus.Logger) *Handler {
+func NewHandler(service *config.GrpcClient, logSetup *logrus.Logger) *Handler {
 	return &Handler{
 		Service: services.Service{
 			OrderGRPC: service.OrderClient,
 			UserGRPC:  service.UserClient,
-			Log:       logrus,
+			Log:       logSetup,
 		},
-		Log: logrus,
+		Log: logSetup,
 	}
 }
