@@ -2,7 +2,7 @@ package services
 
 import (
 	"context"
-	"log"
+
 	"math/rand"
 
 	"github.com/bxcodec/faker"
@@ -13,7 +13,7 @@ var status = []string{"Pending", "Processing", "Shipped", "Delivered"}
 
 // GetOrder - get single fake data order.
 func (s *Server) GetOrder(ctx context.Context, in *pb.GetOrderRequest) (*pb.GetOrderResponse, error) {
-	log.Printf("Received: %v", in)
+	s.Log.Printf("Received: %v", in)
 	var res pb.GetOrderResponse
 	err := faker.FakeData(&res)
 	if err != nil {

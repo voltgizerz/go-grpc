@@ -1,11 +1,10 @@
 package main
 
 import (
-	"log"
 	"net"
 	"os"
 
-	"github.com/joho/godotenv"
+	"github.com/user-service/config"
 	"github.com/user-service/services"
 	pb "github.com/voltgizerz/public-grpc/user/gen"
 	"google.golang.org/grpc"
@@ -14,19 +13,13 @@ import (
 
 var defaultPort = ":3001"
 
-// Init - .
-func Init() {
-	if err := godotenv.Load(); err != nil {
-		log.Print("No .env file found")
-	}
-
+func main() {
+	config.LoadENV()
 	if os.Getenv("PORT") != "" {
 		defaultPort = ":" + os.Getenv("PORT")
 	}
-}
 
-func main() {
-	Init()
+	log := config.SetupLog()
 	lis, err := net.Listen("tcp", defaultPort)
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
@@ -34,7 +27,10 @@ func main() {
 
 	s := grpc.NewServer()
 	reflection.Register(s)
-	pb.RegisterUserServiceServer(s, &services.Server{})
+
+	pb.RegisterUserServiceServer(s, &services.Server{
+		Log: log,
+	})
 	log.Printf("Server gRPC user listening at http://localhost%s", defaultPort)
 
 	if err := s.Serve(lis); err != nil {
