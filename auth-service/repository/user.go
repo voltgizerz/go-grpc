@@ -14,6 +14,7 @@ import (
 type UserRepository interface {
 	GetUserByID(id int64) (*models.User, error)
 	GetUserByUsernameAndPassword(username string, password string) (*models.User, error)
+	CreateUser(user models.User) error
 }
 
 // ReadDataUsers - read data from file bcz we are not using db conn.
@@ -75,3 +76,25 @@ func (u UserRepositoryImpl) GetUserByUsernameAndPassword(username string, passwo
 	return nil, nil
 }
 
+// CreateUser - create new user.
+func (u UserRepositoryImpl) CreateUser(user models.User) error {
+	user.ID = u.DataUsers[len(u.DataUsers)-1].ID + 1
+	user.Name = "WAWAN"
+	user.Password = utils.HashPassword(user.Password)
+
+	dataUsers := u.DataUsers
+	dataUsers = append(dataUsers, user)
+
+	// write data to file
+	data, err := json.Marshal(dataUsers)
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = ioutil.WriteFile("data/users.json", data, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return nil
+}

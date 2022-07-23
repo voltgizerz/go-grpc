@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"errors"
-	"log"
 
 	pb "github.com/voltgizerz/public-grpc/auth/gen"
 	"google.golang.org/grpc/metadata"
@@ -11,29 +10,31 @@ import (
 
 // Validate - validate user.
 func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.ValidateResponse, error) {
-	log.Printf("Received: %v", in)
-	
+	s.Log.Printf("Received: %v", in)
+
 	token := ""
-	if in.Token != ""	{
+	if in.Token != "" {
 		token = in.Token
 	}
 
 	if token == "" {
 		tokenMetaData, err := GetAuthorizationMetaData(ctx)
 		if err != nil {
+			s.Log.Printf("Error: %v", err)
 			return &pb.ValidateResponse{
 				Status: 401,
-				Error: err.Error(),
+				Error:  err.Error(),
 			}, nil
 		}
 		token = tokenMetaData
 	}
 
-	claims, err:= s.Jwt.ValidateToken(token)
+	claims, err := s.Jwt.ValidateToken(token)
 	if err != nil {
+		s.Log.Printf("Error: %v", err)
 		return &pb.ValidateResponse{
 			Status: 401,
-			Error: err.Error(),
+			Error:  err.Error(),
 		}, nil
 	}
 
@@ -46,7 +47,7 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 // GetAuthorizationMetaData - get authorization meta data.
 func GetAuthorizationMetaData(ctx context.Context) (string, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
-  token := md.Get("authorization")[0]
+	token := md.Get("authorization")[0]
 
 	if !ok {
 		return "", errors.New("missing metadata")

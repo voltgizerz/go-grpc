@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/auth-service/repository"
+	"github.com/sirupsen/logrus"
 	pb "github.com/voltgizerz/public-grpc/auth/gen"
 )
 
@@ -10,4 +11,5 @@ type Server struct {
 	pb.UnimplementedAuthServiceServer
 	Jwt      JwtWrapper
 	UserRepo repository.UserRepository
+	Log      *logrus.Logger
 }
