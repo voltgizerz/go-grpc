@@ -1,10 +1,10 @@
-package client
+package config
 
 import (
 	"context"
-	"log"
 	"os"
 
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -25,7 +25,7 @@ func InitGRPC(ctx context.Context) *GrpcClient {
 		grpc.WithBlock(),
 	)
 	if err != nil {
-		log.Fatalf("did not connect to order gRPC: %v", err)
+		log.Errorf("did not connect to order gRPC: %v", err)
 	}
 	// defer orderClient.Close()
 
@@ -34,7 +34,7 @@ func InitGRPC(ctx context.Context) *GrpcClient {
 		grpc.WithBlock(),
 	)
 	if err != nil {
-		log.Fatalf("did not connect to user gRPC: %v", err)
+		log.Errorf("did not connect to user gRPC: %v", err)
 	}
 	// defer userClient.Close()
 

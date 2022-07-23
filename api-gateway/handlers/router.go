@@ -3,14 +3,16 @@ package handlers
 import (
 	"net/http"
 
+	logger "github.com/chi-middleware/logrus-logger"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/v5/middleware"
 )
 
 // NewRouter - is a function that returns a new router.
 func (h *Handler) NewRouter() *chi.Mux {
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
+
+	r.Use(logger.Logger("router", h.Log))
+
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("API Gateway Microservices Felix"))
 	})
@@ -22,5 +24,6 @@ func (h *Handler) NewRouter() *chi.Mux {
 	r.Route("/api/users", func(r chi.Router) {
 		r.Get("/", h.GetUser())
 	})
+
 	return r
 }
