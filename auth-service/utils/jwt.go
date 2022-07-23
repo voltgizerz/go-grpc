@@ -1,3 +1,4 @@
+// Package utils .
 package utils
 
 import (
@@ -8,21 +9,24 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+// JwtWrapper - .
 type JwtWrapper struct {
 	SecretKey       string
 	Issuer          string
 	ExpirationHours int64
 }
 
-type jwtClaims struct {
+// JwtClaims - .
+type JwtClaims struct {
 	jwt.StandardClaims
-	Id       int64
+	ID       int64
 	Username string
 }
 
+// GenerateToken - generate new jwt token.
 func (w *JwtWrapper) GenerateToken(user models.User) (signedToken string, err error) {
-	claims := &jwtClaims{
-		Id:       user.ID,
+	claims := &JwtClaims{
+		ID:       user.ID,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(),
@@ -41,6 +45,7 @@ func (w *JwtWrapper) GenerateToken(user models.User) (signedToken string, err er
 	return signedToken, nil
 }
 
+// ValidateToken - validate jwt token.
 func (w *JwtWrapper) ValidateToken(signedToken string) (claims *jwtClaims, err error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
