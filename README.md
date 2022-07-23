@@ -8,6 +8,7 @@ Simple Microservices using Go with faker data.
 # BUILD WITH
 - Chi
 - Faker
+- JWT
 
 # Install
 
@@ -22,9 +23,10 @@ Simple Microservices using Go with faker data.
 2. Run all gRPC server
 3. Run API Gateway
 4. Test request using postman
+5. Test gRPC using grpcui
 ```
 
-# Where to edit protos ?
+# Where to edit gRPC protos ?
 [Click Here](https://github.com/voltgizerz/public-protos) (public-protos)
 
 # Author
