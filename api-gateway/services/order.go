@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/api-gateway/pb"
+	pb "github.com/voltgizerz/public-grpc/order/gen"
 )
 
 // GetOrder - returns an order.
@@ -14,7 +14,7 @@ func (s *Service) GetOrder(ordID string) (*pb.GetOrderResponse, error) {
 	defer cancel()
 
 	orderID := int64(rand.Intn(100000000))
-	res, err := s.OrderSC.GetOrder(ctx, &pb.GetOrderRequest{OrderId: orderID})
+	res, err := s.OrderGRPC.GetOrder(ctx, &pb.GetOrderRequest{OrderId: orderID})
 	if err != nil {
 		return nil, err
 	}

@@ -4,13 +4,13 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth-service/pb"
+	pb "github.com/voltgizerz/public-grpc/auth/gen"
 )
 
 // Validate - validate user.
-func (s *Server) Validate(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
+func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.ValidateResponse, error) {
 	log.Printf("Received: %v", in)
-	var res pb.LoginResponse
+	var res pb.ValidateResponse
 
 	return &res, nil
 }

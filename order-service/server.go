@@ -6,9 +6,10 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/order-service/pb"
 	"github.com/order-service/services"
+	pb "github.com/voltgizerz/public-grpc/order/gen"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var defaultPort = ":3000"
@@ -32,6 +33,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
+	reflection.Register(s)
 	pb.RegisterOrderServiceServer(s, &services.Server{})
 	log.Printf("Server gRPC order listening at http://localhost%s", defaultPort)
 

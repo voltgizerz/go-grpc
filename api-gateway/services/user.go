@@ -4,8 +4,7 @@ import (
 	"context"
 	"math/rand"
 	"time"
-
-	"github.com/api-gateway/pb"
+	pb "github.com/voltgizerz/public-grpc/user/gen"
 )
 
 // GetUser - returns a user.
@@ -14,7 +13,7 @@ func (s *Service) GetUser(uID string) (*pb.GetUserResponse, error) {
 	defer cancel()
 
 	userID := int64(rand.Intn(1000))
-	res, err := s.UserSC.GetUser(ctx, &pb.GetUserRequest{UserId: userID})
+	res, err := s.UserGRPC.GetUser(ctx, &pb.GetUserRequest{UserId: userID})
 	if err != nil {
 		return nil, err
 	}

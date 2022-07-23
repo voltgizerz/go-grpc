@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth-service/pb"
+	pb "github.com/voltgizerz/public-grpc/auth/gen"
 )
 
 // Login - login user.

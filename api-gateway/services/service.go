@@ -1,9 +1,13 @@
 package services
 
-import "github.com/api-gateway/pb"
+import (
+	oClient "github.com/voltgizerz/public-grpc/order/gen"
+	uClient "github.com/voltgizerz/public-grpc/user/gen"
+)
 
 // Service - .
 type Service struct {
-	OrderSC pb.OrderServiceClient
-	UserSC  pb.UserServiceClient
+	OrderGRPC oClient.OrderServiceClient
+	UserGRPC  uClient.UserServiceClient
 }
+

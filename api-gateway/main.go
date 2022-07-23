@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/api-gateway/handlers"
+	"github.com/api-gateway/client"
 	"github.com/joho/godotenv"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+
 )
 
 var defaultPort = ":1000"
@@ -33,25 +33,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.TODO(), 1*time.Second)
 	defer cancel()
 
-	connOrder, err := grpc.DialContext(ctx, os.Getenv("ORDER_GRPC"),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
-	)
-	if err != nil {
-		log.Fatalf("did not connect to order gRPC: %v", err)
-	}
-	defer connOrder.Close()
+	clientGrpc := client.InitGRPC(ctx)
 
-	connUser, err := grpc.DialContext(ctx, os.Getenv("USER_GRPC"),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
-	)
-	if err != nil {
-		log.Fatalf("did not connect to user gRPC: %v", err)
-	}
-	defer connUser.Close()
-
-	h := handlers.NewHandler(connOrder, connUser)
+	h := handlers.NewHandler(clientGrpc)
 	appRouter := h.NewRouter()
 
 	log.Printf("API Gateway listening at http://localhost%s", defaultPort)

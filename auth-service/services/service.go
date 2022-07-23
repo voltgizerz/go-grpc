@@ -1,6 +1,6 @@
 package services
 
-import "github.com/auth-service/pb"
+import 	pb "github.com/voltgizerz/public-grpc/auth/gen"
 
 // Server is used to implement helloworld.GreeterServer.
 type Server struct {

@@ -4,14 +4,13 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth-service/pb"
+	pb "github.com/voltgizerz/public-grpc/auth/gen"
 )
 
-
 // Register - register user.
-func (s *Server) Register(ctx context.Context, in *pb.LoginRequest) (*pb.LoginResponse, error) {
+func (s *Server) Register(ctx context.Context, in *pb.RegisterRequest) (*pb.RegisterResponse, error) {
 	log.Printf("Received: %v", in)
-	var res pb.LoginResponse
+	var res pb.RegisterResponse
 
 	return &res, nil
 }

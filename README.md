@@ -24,6 +24,9 @@ Simple Microservices using Go with faker data.
 4. Test request using postman
 ```
 
+# Where to edit protos ?
+-[Here](https://github.com/voltgizerz/public-protos)
+
 # Author
 
 👤 **Felix Fernando**

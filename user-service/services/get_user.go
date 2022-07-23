@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/bxcodec/faker"
-	"github.com/user-service/pb"
+	pb "github.com/voltgizerz/public-grpc/user/gen"
 )
 
 var status = []string{"Pending", "Processing", "Shipped", "Delivered"}
