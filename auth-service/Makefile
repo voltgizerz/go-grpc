@@ -9,3 +9,6 @@ gen-grpc:
 
 format:
 	gofmt -w ./...
+
+grpcui:
+	grpcui -plaintext localhost:4000

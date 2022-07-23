@@ -1,8 +1,8 @@
-// Package utils .
-package utils
+package services
 
 import (
 	"errors"
+	"os"
 	"time"
 
 	"github.com/auth-service/models"
@@ -14,6 +14,14 @@ type JwtWrapper struct {
 	SecretKey       string
 	Issuer          string
 	ExpirationHours int64
+}
+
+func NewJwtWrapper() JwtWrapper {
+	return JwtWrapper{
+		SecretKey:       os.Getenv("JWT_SECRET_KEY"),
+		Issuer:          "felix",
+		ExpirationHours: time.Now().Local().Add(time.Hour * time.Duration(1000)).Unix(),
+	}
 }
 
 // JwtClaims - .
@@ -29,13 +37,12 @@ func (w *JwtWrapper) GenerateToken(user models.User) (signedToken string, err er
 		ID:       user.ID,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(),
+			ExpiresAt: w.ExpirationHours,
 			Issuer:    w.Issuer,
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
 	signedToken, err = token.SignedString([]byte(w.SecretKey))
 
 	if err != nil {
@@ -46,10 +53,10 @@ func (w *JwtWrapper) GenerateToken(user models.User) (signedToken string, err er
 }
 
 // ValidateToken - validate jwt token.
-func (w *JwtWrapper) ValidateToken(signedToken string) (claims *jwtClaims, err error) {
+func (w *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaims, err error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
-		&jwtClaims{},
+		&JwtClaims{},
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(w.SecretKey), nil
 		},
@@ -59,7 +66,7 @@ func (w *JwtWrapper) ValidateToken(signedToken string) (claims *jwtClaims, err e
 		return
 	}
 
-	claims, ok := token.Claims.(*jwtClaims)
+	claims, ok := token.Claims.(*JwtClaims)
 
 	if !ok {
 		return nil, errors.New("couldn't parse claims")

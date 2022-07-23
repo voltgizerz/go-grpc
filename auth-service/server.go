@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/auth-service/services"
+	"github.com/auth-service/repository"
 	"github.com/joho/godotenv"
 	pb "github.com/voltgizerz/public-grpc/auth/gen"
 	"google.golang.org/grpc"
@@ -34,7 +35,14 @@ func main() {
 
 	s := grpc.NewServer()
 	reflection.Register(s)
-	pb.RegisterAuthServiceServer(s, &services.Server{})
+	jwt := services.NewJwtWrapper()
+	userRepo := repository.NewUserRepository()
+	
+	pb.RegisterAuthServiceServer(s, &services.Server{
+		Jwt: jwt,
+		UserRepo: userRepo,
+	})
+
 	log.Printf("Server gRPC auth listening at http://localhost%s", defaultPort)
 
 	if err := s.Serve(lis); err != nil {
