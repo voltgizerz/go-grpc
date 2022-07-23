@@ -43,7 +43,7 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 	}, nil
 }
 
-
+// GetAuthorizationMetaData - get authorization meta data.
 func GetAuthorizationMetaData(ctx context.Context) (string, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
   token := md.Get("authorization")[0]

@@ -10,6 +10,7 @@ import (
 	"github.com/auth-service/utils"
 )
 
+// UserRepository - interface for user repository.
 type UserRepository interface {
 	GetUserByID(id int64) (*models.User, error)
 	GetUserByUsernameAndPassword(username string, password string) (*models.User, error)
@@ -40,16 +41,19 @@ func ReadDataUsers() []models.User {
 	return users
 }
 
+// NewUserRepository - create new user repository.
 func NewUserRepository() UserRepository {
 	return UserRepositoryImpl{
 		DataUsers: ReadDataUsers(),
 	}
 }
 
+// UserRepositoryImpl - implementation of user repository.
 type UserRepositoryImpl struct {
 	DataUsers []models.User
 }
 
+// GetUserByID - get user by id.
 func (u UserRepositoryImpl) GetUserByID(id int64) (*models.User, error) {
 	for _, v := range u.DataUsers {
 		if v.ID == id {
@@ -60,7 +64,7 @@ func (u UserRepositoryImpl) GetUserByID(id int64) (*models.User, error) {
 	return nil, nil
 }
 
-
+// GetUserByUsernameAndPassword - get user by username and password.
 func (u UserRepositoryImpl) GetUserByUsernameAndPassword(username string, password string) (*models.User, error) {
 	for _, v := range u.DataUsers {
 		if v.Username == username && v.Password == utils.HashPassword(password) {

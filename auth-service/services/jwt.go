@@ -16,6 +16,7 @@ type JwtWrapper struct {
 	ExpirationHours int64
 }
 
+// NewJwtWrapper - create new jwt wrapper.
 func NewJwtWrapper() JwtWrapper {
 	return JwtWrapper{
 		SecretKey:       os.Getenv("JWT_SECRET_KEY"),
