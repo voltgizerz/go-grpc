@@ -30,6 +30,7 @@ type JwtClaims struct {
 	jwt.StandardClaims
 	ID       int64
 	Username string
+	ExpiresAt int64
 }
 
 // GenerateToken - generate new jwt token.
@@ -68,7 +69,6 @@ func (w *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaims, err e
 	}
 
 	claims, ok := token.Claims.(*JwtClaims)
-
 	if !ok {
 		return nil, errors.New("couldn't parse claims")
 	}
@@ -78,5 +78,4 @@ func (w *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaims, err e
 	}
 
 	return claims, nil
-
 }
