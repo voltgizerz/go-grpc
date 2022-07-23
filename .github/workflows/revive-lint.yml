@@ -6,14 +6,14 @@ on:
       - master
       - develop
     paths:
-      - 'api-gateway/**.go'
+      - '*/**.go'
       - 'revive.toml'
-      - '.github/workflows/revive-lint-gateway.yml'
+      - '.github/workflows/revive-lint.yml'
 
 jobs:
 
   lint:
-    name: Lint API Gateway Service
+    name: Lint Auth Service
     runs-on: ubuntu-latest
     steps:
 
