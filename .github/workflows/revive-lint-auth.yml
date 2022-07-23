@@ -6,7 +6,7 @@ on:
       - master
       - develop
     paths:
-      - 'auth/**.go'
+      - 'auth-service/**.go'
       - 'revive.toml'
       - '.github/workflows/revive-lint-auth.yml'
 

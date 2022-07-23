@@ -6,7 +6,7 @@ on:
       - master
       - develop
     paths:
-      - 'order/**.go'
+      - 'order-service/**.go'
       - 'revive.toml'
       - '.github/workflows/revive-lint-order.yml'
 
