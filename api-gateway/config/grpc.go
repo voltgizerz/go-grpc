@@ -4,7 +4,6 @@ import (
 	"context"
 	"os"
 
-	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -20,6 +19,8 @@ type GrpcClient struct {
 
 // InitGRPC - return client gRPC.
 func InitGRPC(ctx context.Context) *GrpcClient {
+	log := SetupLog()
+
 	orderClient, err := grpc.DialContext(ctx, os.Getenv("ORDER_GRPC"),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 		grpc.WithBlock(),

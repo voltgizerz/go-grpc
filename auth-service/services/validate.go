@@ -47,7 +47,7 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 func GetAuthorizationMetaData(ctx context.Context) (string, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
   token := md.Get("authorization")[0]
-	log.Println(token)
+
 	if !ok {
 		return "", errors.New("missing metadata")
 	}

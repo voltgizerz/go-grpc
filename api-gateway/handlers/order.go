@@ -13,7 +13,12 @@ func (h *Handler) GetOrder() http.HandlerFunc {
 			ErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
 		}
+
+		if res == nil {
+			ErrorResponse(w, http.StatusNotFound, "Order not found")
+			return
+		}
+
 		SuccesResponse(w, http.StatusOK, "Success", res)
-		return
 	}
 }

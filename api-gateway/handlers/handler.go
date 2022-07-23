@@ -18,6 +18,7 @@ func NewHandler(service *config.GrpcClient, logrus *logrus.Logger) *Handler {
 		Service: services.Service{
 			OrderGRPC: service.OrderClient,
 			UserGRPC:  service.UserClient,
+			Log:       logrus,
 		},
 		Log: logrus,
 	}

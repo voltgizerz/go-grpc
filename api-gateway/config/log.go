@@ -5,6 +5,7 @@ import (
 	nested "github.com/antonfisher/nested-logrus-formatter"
 )
 
+// SetupLog - return logrus.
 func SetupLog() *logrus.Logger {
 	log := logrus.New()
 	log.SetFormatter(&nested.Formatter{

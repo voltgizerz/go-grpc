@@ -13,7 +13,12 @@ func (h *Handler) GetUser() http.HandlerFunc {
 			ErrorResponse(w, http.StatusInternalServerError, err.Error())
 			return
 		}
+
+		if res == nil {
+			ErrorResponse(w, http.StatusNotFound, "User not found")
+			return
+		}
+
 		SuccesResponse(w, http.StatusOK, "Success", res)
-		return
 	}
 }

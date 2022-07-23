@@ -13,3 +13,6 @@ run-auth:
 run-api:
 	@echo "Running... API Services"
 	cd ./api-gateway && go run main.go
+
+check:
+	revive ./...
