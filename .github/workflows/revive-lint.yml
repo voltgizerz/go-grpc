@@ -13,7 +13,7 @@ on:
 jobs:
 
   lint:
-    name: Lint Auth Service
+    name: Lint Service
     runs-on: ubuntu-latest
     steps:
 
@@ -31,4 +31,4 @@ jobs:
         config: revive.toml
 
     - name: Check formatting
-      run: test -z $(gofmt -l .) || (gofmt -l . && exit 1)
+      run: gofmt -l .
