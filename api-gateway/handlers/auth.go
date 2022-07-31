@@ -51,7 +51,6 @@ func (h *Handler) Register() http.HandlerFunc {
 // Login - is a function for login handlers.
 func (h *Handler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		var req LoginRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			ErrorResponse(w, http.StatusBadRequest, err.Error())
@@ -81,7 +80,6 @@ func (h *Handler) Login() http.HandlerFunc {
 // Validate - is a function for validate user handlers.
 func (h *Handler) Validate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		token := r.Header.Get("Authorization")
 		if token == "" {
 			ErrorResponse(w, http.StatusUnauthorized, "Unauthorized")
