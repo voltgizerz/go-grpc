@@ -80,7 +80,6 @@ func (u UserRepositoryImpl) GetUserByUsernameAndPassword(username string, passwo
 
 // CreateUser - create new user.
 func (u UserRepositoryImpl) CreateUser(user models.User) error {
-
 	// check is username exist
 	if u.IsUserExist(user.Username) {
 		return errors.New("username already exist")
