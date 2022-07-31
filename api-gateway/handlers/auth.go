@@ -6,11 +6,13 @@ import (
 	"net/http"
 )
 
+// LoginRequest - is a struct for login request.
 type LoginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
+// RegisterRequest - is a struct for register request.
 type RegisterRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
