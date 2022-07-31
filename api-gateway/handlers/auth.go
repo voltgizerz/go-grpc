@@ -21,7 +21,6 @@ type RegisterRequest struct {
 // Register - is a function for register handlers.
 func (h *Handler) Register() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Parse the request body
 		var req RegisterRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			ErrorResponse(w, http.StatusBadRequest, err.Error())
