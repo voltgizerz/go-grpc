@@ -21,5 +21,6 @@ func (s *Service) GetOrder(ordID string) (*pb.GetOrderResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return res, nil
 }

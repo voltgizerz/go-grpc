@@ -21,5 +21,6 @@ func (s *Service) GetUser(uID string) (*pb.GetUserResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return res, nil
 }

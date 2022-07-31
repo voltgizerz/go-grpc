@@ -17,6 +17,18 @@ func (h *Handler) NewRouter() *chi.Mux {
 		w.Write([]byte("API Gateway Microservices Felix"))
 	})
 
+	r.Route("/api/login", func(r chi.Router) {
+		r.Post("/", h.Login())
+	})
+
+	r.Route("/api/register", func(r chi.Router) {
+		r.Post("/", h.Register())
+	})
+
+	r.Route("/api/validate", func(r chi.Router) {
+		r.Post("/", h.Validate())
+	})
+
 	r.Route("/api/orders", func(r chi.Router) {
 		r.Get("/", h.GetOrder())
 	})
