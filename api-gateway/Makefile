@@ -10,3 +10,6 @@ gen-grpc:
 format:
 	gofmt -w ./...
 	revive ./...
+
+build:
+	go build

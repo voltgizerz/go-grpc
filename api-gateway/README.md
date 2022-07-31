@@ -17,8 +17,8 @@ Auth
 - POST api/validate
 
 Order
--GET api/orders
+- GET api/orders
 
 User
--GET api/users
+- GET api/users
 ```

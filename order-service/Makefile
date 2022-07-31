@@ -12,3 +12,6 @@ format:
 
 update-grpc:
 	go get -u github.com/voltgizerz/public-grpc@latest
+
+build:
+	go build

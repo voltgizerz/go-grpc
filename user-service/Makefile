@@ -9,3 +9,6 @@ gen-grpc:
 
 format:
 	gofmt -w ./...
+
+build:
+	go build

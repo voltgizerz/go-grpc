@@ -12,3 +12,6 @@ format:
 
 grpcui:
 	grpcui -plaintext localhost:4000
+
+build:
+	go build
