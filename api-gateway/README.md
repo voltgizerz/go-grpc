@@ -11,10 +11,14 @@ PORT=1000
 
 ## ENDPOINT
 ```sh
-POST api/register
-POST api/login
-POST api/validate
+Auth
+- POST api/register
+- POST api/login
+- POST api/validate
 
-GET api/orders
-GET api/users
+Order
+-GET api/orders
+
+User
+-GET api/users
 ```
