@@ -2,6 +2,8 @@ package repository
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -68,7 +70,7 @@ func (u UserRepositoryImpl) GetUserByID(id int64) (*models.User, error) {
 // GetUserByUsernameAndPassword - get user by username and password.
 func (u UserRepositoryImpl) GetUserByUsernameAndPassword(username string, password string) (*models.User, error) {
 	for _, v := range u.DataUsers {
-		if v.Username == username && v.Password == utils.HashPassword(password) {
+		if v.Username == username && utils.CheckPasswordHash(password, v.Password) {
 			return &v, nil
 		}
 	}
@@ -78,8 +80,14 @@ func (u UserRepositoryImpl) GetUserByUsernameAndPassword(username string, passwo
 
 // CreateUser - create new user.
 func (u UserRepositoryImpl) CreateUser(user models.User) error {
+
+	// check is username exist
+	if u.IsUserExist(user.Username) {
+		return errors.New("username already exist")
+	}
+
 	user.ID = u.DataUsers[len(u.DataUsers)-1].ID + 1
-	user.Name = "WAWAN"
+	user.Name =  fmt.Sprintf("User-%d", user.ID)
 	user.Password = utils.HashPassword(user.Password)
 
 	dataUsers := u.DataUsers
@@ -97,4 +105,15 @@ func (u UserRepositoryImpl) CreateUser(user models.User) error {
 	}
 
 	return nil
+}
+
+// IsUserExist - check is username exist.
+func (u UserRepositoryImpl) IsUserExist(username string) bool {
+	for _, v := range u.DataUsers {
+		if v.Username == username {
+			return true
+		}
+	}
+
+	return false
 }

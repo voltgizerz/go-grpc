@@ -16,11 +16,11 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 	if in.Token != "" {
 		token = in.Token
 	}
-
+	s.Log.Println(token)
 	if token == "" {
 		tokenMetaData, err := GetAuthorizationMetaData(ctx)
 		if err != nil {
-			s.Log.Printf("Error: %v", err)
+			s.Log.Errorf("Error: %v", err)
 			return &pb.ValidateResponse{
 				Status: 401,
 				Error:  err.Error(),
@@ -31,7 +31,7 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 
 	claims, err := s.Jwt.ValidateToken(token)
 	if err != nil {
-		s.Log.Printf("Error: %v", err)
+		s.Log.Errorf("Error: %v", err)
 		return &pb.ValidateResponse{
 			Status: 401,
 			Error:  err.Error(),

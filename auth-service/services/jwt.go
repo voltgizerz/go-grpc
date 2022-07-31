@@ -11,35 +11,35 @@ import (
 
 // JwtWrapper - .
 type JwtWrapper struct {
-	SecretKey       string
-	Issuer          string
-	ExpirationHours int64
+	SecretKey string
+	Issuer    string
 }
 
 // NewJwtWrapper - create new jwt wrapper.
 func NewJwtWrapper() JwtWrapper {
 	return JwtWrapper{
-		SecretKey:       os.Getenv("JWT_SECRET_KEY"),
-		Issuer:          "felix",
-		ExpirationHours: time.Now().Local().Add(time.Hour * time.Duration(1000)).Unix(),
+		SecretKey: os.Getenv("JWT_SECRET_KEY"),
+		Issuer:    "felix",
 	}
 }
 
 // JwtClaims - .
 type JwtClaims struct {
 	jwt.StandardClaims
-	ID       int64
-	Username string
+	ID        int64
+	Username  string
 	ExpiresAt int64
 }
 
 // GenerateToken - generate new jwt token.
 func (w *JwtWrapper) GenerateToken(user models.User) (signedToken string, err error) {
+	expiredAt := time.Now().Local().Add(time.Hour * 1).Unix()
 	claims := &JwtClaims{
-		ID:       user.ID,
-		Username: user.Username,
+		ID:        user.ID,
+		Username:  user.Username,
+		ExpiresAt: expiredAt,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: w.ExpirationHours,
+			ExpiresAt: expiredAt,
 			Issuer:    w.Issuer,
 		},
 	}
@@ -73,7 +73,7 @@ func (w *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaims, err e
 		return nil, errors.New("couldn't parse claims")
 	}
 
-	if claims.ExpiresAt < time.Now().Local().Unix() {
+	if claims.StandardClaims.ExpiresAt < time.Now().Local().Unix() {
 		return nil, errors.New("jwt is expired")
 	}
 
