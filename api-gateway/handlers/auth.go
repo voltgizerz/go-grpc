@@ -85,7 +85,6 @@ func (h *Handler) Validate() http.HandlerFunc {
 			return
 		}
 
-		log.Println(token)
 		res, err := h.Service.Validate(token)
 		if err != nil {
 			ErrorResponse(w, http.StatusUnauthorized, err.Error())

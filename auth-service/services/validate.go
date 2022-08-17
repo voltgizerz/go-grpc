@@ -16,7 +16,7 @@ func (s *Server) Validate(ctx context.Context, in *pb.ValidateRequest) (*pb.Vali
 	if in.Token != "" {
 		token = in.Token
 	}
-	s.Log.Println(token)
+
 	if token == "" {
 		tokenMetaData, err := GetAuthorizationMetaData(ctx)
 		if err != nil {
